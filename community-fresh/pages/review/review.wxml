@@ -1,0 +1,27 @@
+<view class="review-container">
+  <view class="section">
+    <text class="label">评分：</text>
+    <view class="stars">
+      <block wx:for="{{5}}" wx:key="index">
+        <image
+          class="star"
+          src="{{index < rating ? '/assets/star-on.png' : '/assets/star-off.png'}}"
+          bindtap="setRating"
+          data-index="{{index}}"
+        ></image>
+      </block>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="label">评价内容：</text>
+    <textarea
+      placeholder="请输入对商品或服务的评价..."
+      value="{{content}}"
+      bindinput="onInput"
+      maxlength="200"
+    ></textarea>
+  </view>
+
+  <button class="submit-btn" bindtap="onSubmit">提交评价</button>
+</view>

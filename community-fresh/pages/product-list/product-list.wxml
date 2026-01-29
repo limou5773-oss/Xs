@@ -1,0 +1,180 @@
+<view class="main-container">
+  <view class="header">
+    <view class="search-bar">
+      <icon type="search" size="14" color="#999"></icon>
+      <input
+        class="search-input"
+        placeholder="搜索商品..."
+        confirm-type="search"
+        bindconfirm="onSearch"
+        bindinput="onInput"
+        value="{{keyword}}"
+      />
+      <icon
+        wx:if="{{keyword}}"
+        type="clear"
+        size="14"
+        color="#ccc"
+        bindtap="clearSearch"
+      ></icon>
+    </view>
+  </view>
+
+  <view class="content-box">
+    <!-- 左侧分类 -->
+    <scroll-view class="left-menu" scroll-y>
+      <view
+        class="menu-item {{activeCategoryId === null ? 'active' : ''}}"
+        bindtap="onCategoryChange"
+        data-id="{{null}}"
+      >
+        全部
+      </view>
+      <block wx:for="{{categoryList}}" wx:key="id">
+        <view
+          class="menu-item {{activeCategoryId === item.id ? 'active' : ''}}"
+          bindtap="onCategoryChange"
+          data-id="{{item.id}}"
+        >
+          {{item.name}}
+        </view>
+      </block>
+      <view style="height: 150rpx;"></view>
+    </scroll-view>
+
+    <!-- 右侧内容：用 scroll-top + scroll 事件联动 -->
+    <scroll-view
+      class="right-content"
+      scroll-y
+      scroll-top="{{scrollTop}}"
+      scroll-with-animation
+      bindscroll="onRightScroll"
+      bindscrolltolower="onRightScrollBottom"
+    >
+      <!-- 顶部预留位置（点击全部时滚到这里，其实 scrollTop=0 即可） -->
+      <view id="cat_all"></view>
+
+      <block wx:for="{{categoryList}}" wx:key="id" wx:for-item="cat">
+        <view
+          class="section-header js-cat-header"
+          id="cat_{{cat.id}}"
+          data-id="{{cat.id}}"
+        >
+          {{cat.name}}
+        </view>
+
+        <view class="product-box">
+          <block wx:for="{{cat.products}}" wx:key="id" wx:for-item="prod">
+            <view class="product-item">
+              <view
+                class="img-wrapper"
+                bindtap="goDetail"
+                data-id="{{prod.id}}"
+              >
+                <image
+                  class="prod-img"
+                  src="{{prod.image}}"
+                  mode="aspectFill"
+                ></image>
+                <view class="sold-out-mask" wx:if="{{prod.stock <= 0}}">
+                  已售罄
+                </view>
+              </view>
+
+              <view class="prod-info">
+                <text
+                  class="name"
+                  bindtap="goDetail"
+                  data-id="{{prod.id}}"
+                  >{{prod.name}}</text
+                >
+                <text class="desc"
+                  >{{prod.description || '暂无描述'}}</text
+                >
+
+                <view class="stock-row" wx:if="{{prod.stock > 0}}">
+                  <text
+                    class="stock-text {{prod.stock < 2 ? 'low-stock' : ''}}"
+                  >
+                    {{prod.stock < 2 ? '仅剩' : '剩余'}} {{prod.stock}}
+                  </text>
+                </view>
+
+                <view class="price-action">
+                  <view class="price-box">
+                    <text class="currency">¥</text>
+                    <text class="price">{{prod.price}}</text>
+                    <text class="unit" wx:if="{{prod.unit}}"
+                      >/{{prod.unit}}</text
+                    >
+                  </view>
+
+                  <view
+                    class="circle-add-btn {{prod.stock <= 0 ? 'disabled' : ''}}"
+                    wx:if="{{prod.cartNum == 0}}"
+                    catchtap="updateCart"
+                    data-item="{{prod}}"
+                    data-type="plus"
+                    >+</view
+                  >
+
+                  <view class="stepper-bar" wx:else catchtap="preventBubble">
+                    <view
+                      class="step-btn minus"
+                      catchtap="updateCart"
+                      data-item="{{prod}}"
+                      data-type="minus"
+                      >-</view
+                    >
+                    <text class="step-num">{{prod.cartNum}}</text>
+                    <view
+                      class="step-btn plus {{prod.stock <= 0 || prod.cartNum >= prod.stock ? 'disabled' : ''}}"
+                      catchtap="updateCart"
+                      data-item="{{prod}}"
+                      data-type="plus"
+                      >+</view
+                    >
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+
+          <!-- ⭐ 分类下没有商品时显示 -->
+          <view class="empty-tip" wx:if="{{cat.products.length == 0}}">
+            暂无商品
+          </view>
+        </view>
+      </block>
+
+      <view style="height: 180rpx;"></view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部购物车条 -->
+  <view class="cart-bar-wrapper">
+    <view class="cart-bar" bindtap="goCart">
+      <view
+        class="cart-icon-box {{totalCount > 0 ? 'active' : ''}} {{cartAnimation ? 'bounce' : ''}}"
+      >
+        <image
+          class="cart-icon"
+          src="/images/tabbar/cart_white.png"
+        ></image>
+        <view class="badge" wx:if="{{totalCount > 0}}">{{totalCount}}</view>
+      </view>
+      <view class="price-info">
+        <text class="total-price" wx:if="{{totalCount > 0}}"
+          >¥{{totalPrice}}</text
+        >
+        <text class="total-price empty" wx:else>未选购商品</text>
+        <text class="sub-text">免配送费</text>
+      </view>
+      <view
+        class="pay-btn {{totalCount > 0 ? 'active' : ''}}"
+        catchtap="goCheckout"
+        >去结算</view
+      >
+    </view>
+  </view>
+</view>

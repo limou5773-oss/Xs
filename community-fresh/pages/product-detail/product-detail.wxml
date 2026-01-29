@@ -1,0 +1,73 @@
+<view class="container" wx:if="{{product}}">
+  
+  <view class="gallery">
+    <image src="{{product.image}}" class="main-img" mode="aspectFill"></image>
+    <view class="sold-out-mask" wx:if="{{product.stock <= 0}}">暂时缺货</view>
+  </view>
+
+  <view class="price-banner">
+    <view class="left-price">
+      <text class="symbol">¥</text>
+      <text class="amount">{{product.price}}</text>
+      <text class="unit" wx:if="{{product.unit}}">/{{product.unit}}</text>
+    </view>
+    <view class="right-stat">
+      <text class="hot-icon">🔥</text>
+      <text>库存仅剩 {{product.stock}}</text>
+    </view>
+  </view>
+
+  <view class="info-card">
+    <view class="title-row">
+      <text class="product-title">{{product.name}}</text>
+      <button class="share-btn" open-type="share">
+        <image src="/images/share.png" class="share-icon" wx:if="{{false}}"></image> <text>🔗 分享</text>
+      </button>
+    </view>
+
+    <view class="tags-wrapper" wx:if="{{product.description}}">
+      <view class="tag orange">店长推荐</view>
+      <view class="tag green">源头直采</view>
+      <view class="tag blue">{{product.description}}</view>
+    </view>
+
+    <view class="service-bar">
+      <view class="item"><text class="check">✔</text> 坏果包赔</view>
+      <view class="item"><text class="check">✔</text> 极速退款</view>
+      <view class="item"><text class="check">✔</text> 48小时发货</view>
+    </view>
+  </view>
+
+  <view class="detail-section">
+    <view class="section-header">
+      <view class="dot"></view>
+      <text class="header-title">商品详情</text>
+      <view class="dot"></view>
+    </view>
+    <view class="content-box">
+      <text>{{product.description || '暂无详情描述，但在新鲜度和品质上，我们从不打折！'}}</text>
+    </view>
+  </view>
+
+  <view style="height: 180rpx;"></view>
+
+  <view class="bottom-bar">
+    <view class="nav-group">
+      <view class="nav-item" bindtap="goHome">
+        <view class="nav-ico">🏠</view>
+        <text>首页</text>
+      </view>
+      <view class="nav-item" bindtap="goCart">
+        <view class="nav-ico">🛒</view>
+        <text>购物车</text>
+      </view>
+    </view>
+    
+    <view class="btn-wrapper">
+      <view class="buy-btn {{product.stock <= 0 ? 'disabled' : ''}}" bindtap="addToCart">
+        {{product.stock <= 0 ? '已售罄' : '加入购物车'}}
+      </view>
+    </view>
+  </view>
+
+</view>

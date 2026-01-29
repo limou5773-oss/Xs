@@ -1,0 +1,15 @@
+<view class="container">
+  <!-- 未登录状态 -->
+  <view wx:if="{{!user}}">
+    <button class="login-btn" loading="{{loading}}" bindtap="onLogin">
+      微信一键登录
+    </button>
+  </view>
+
+  <!-- 已登录状态 -->
+  <view wx:else class="user-info">
+    <image class="avatar" src="{{user.avatar}}" mode="aspectFill"></image>
+    <text class="nickname">{{user.nickname}}</text>
+    <button class="logout-btn" bindtap="logout">退出登录</button>
+  </view>
+</view>

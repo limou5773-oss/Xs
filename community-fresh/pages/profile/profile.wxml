@@ -1,0 +1,95 @@
+<view class="profile-page">
+
+<view class="bg-decoration top-circle"></view>
+<view class="bg-decoration bottom-circle"></view>
+
+<view class="header-area">
+  <view class="user-info-box" bindtap="goEdit">
+    <image class="avatar" src="{{user.avatar || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+    <view class="text-group">
+      <view class="name-row">
+        <text class="nickname">{{user ? user.nickname : '请登录'}}</text>
+      </view>
+      <text class="sub-text">{{user ? '社区生鲜，新鲜到家' : '登录同步订单信息'}}</text>
+    </view>
+  </view>
+  <view class="arrow-right">›</view>
+</view>
+
+<view class="section-card order-section">
+  <view class="sec-header" bindtap="goOrder" data-status="all">
+    <text class="sec-title">我的订单</text>
+    <text class="sec-more">全部 ></text>
+  </view>
+  
+  <view class="icon-row">
+    <view class="icon-item" bindtap="goOrder" data-status="0">
+      <view class="icon-bg bg-orange">
+        <image wx:if="{{hasIcons}}" src="/assets/icons/pay.png" class="img-icon"></image>
+        <text wx:else>💳</text>
+        <view wx:if="{{orderCount.pendingPay}}" class="dot"></view>
+      </view>
+      <text class="icon-label">待付款</text>
+    </view>
+    
+    <view class="icon-item" bindtap="goOrder" data-status="1">
+      <view class="icon-bg bg-blue">
+        <image wx:if="{{hasIcons}}" src="/assets/icons/send.png" class="img-icon"></image>
+        <text wx:else>📦</text>
+        <view wx:if="{{orderCount.pendingSend}}" class="dot"></view>
+      </view>
+      <text class="icon-label">待发货</text>
+    </view>
+    
+    <view class="icon-item" bindtap="goOrder" data-status="2">
+      <view class="icon-bg bg-green">
+        <image wx:if="{{hasIcons}}" src="/assets/icons/deliver.png" class="img-icon"></image>
+        <text wx:else>🚚</text>
+        <view wx:if="{{orderCount.pendingReceive}}" class="dot"></view>
+      </view>
+      <text class="icon-label">待收货</text>
+    </view>
+    
+    <view class="icon-item" bindtap="goOrder" data-status="3">
+      <view class="icon-bg bg-gray">
+        <image wx:if="{{hasIcons}}" src="/assets/icons/done.png" class="img-icon"></image>
+        <text wx:else>✅</text>
+      </view>
+      <text class="icon-label">已完成</text>
+    </view>
+  </view>
+</view>
+
+<view class="section-title">常用服务</view>
+
+<view class="grid-card">
+  <view class="grid-box" bindtap="goPage" data-url="/pages/address/address">
+    <view class="grid-icon">📍</view>
+    <text class="grid-text">地址管理</text>
+    <text class="grid-desc">收货地</text>
+  </view>
+
+  <view class="grid-box" bindtap="goPage" data-url="/pages/contact/contact">
+    <view class="grid-icon">🎧</view>
+    <text class="grid-text">联系客服</text>
+    <text class="grid-desc">咨询问题</text>
+  </view>
+
+  <view class="grid-box" bindtap="goPage" data-url="/pages/help/help">
+    <view class="grid-icon">📖</view>
+    <text class="grid-text">帮助中心</text>
+    <text class="grid-desc">Q&A</text>
+  </view>
+
+  <view class="grid-box" bindtap="goEdit">
+    <view class="grid-icon">⚙️</view>
+    <text class="grid-text">个人设置</text>
+    <text class="grid-desc">修改资料</text>
+  </view>
+</view>
+
+<view wx:if="{{user}}" class="footer-area">
+  <view class="logout-text" bindtap="logout">退出登录</view>
+</view>
+
+</view>

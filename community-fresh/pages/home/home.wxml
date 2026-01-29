@@ -1,0 +1,110 @@
+<view class="container">
+  
+  <view class="header-section">
+    <view class="shop-card">
+      <view class="shop-logo-box">
+        <image class="shop-logo" src="/images/logo.png" mode="aspectFill"></image>
+      </view>
+      <view class="shop-details">
+        <view class="shop-name-row">
+          <text class="shop-name">鲜家·社区生鲜店</text>
+        </view>
+        <text class="shop-tag">源头直采 | 坏果包赔 | 免费配送</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="notice-box" wx:if="{{notice}}">
+    <view class="notice-icon">📢</view>
+    <swiper class="notice-swiper" vertical autoplay circular interval="3000">
+      <swiper-item>
+        <view class="notice-text">{{notice}}</view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <view class="delivery-card" wx:if="{{deliveryInfo.show}}">
+    <view class="card-left">
+      <view class="status-row">
+        <text class="tag-self" wx:if="{{deliveryInfo.isDelivering}}">配送中</text>
+        <text class="tag-self" wx:else>已接单</text>
+        <text class="status-text">{{deliveryInfo.statusText}}</text>
+      </view>
+      <view class="time-row">
+        <text class="time-val-text">{{deliveryInfo.subText}}</text>
+      </view>
+      <view class="driver-box">
+        <text>配送员: {{deliveryInfo.staffName}}</text>
+        <view class="call-btn" bindtap="callShop"><text>📞</text></view>
+      </view>
+    </view>
+    <view class="card-right">
+      <image class="delivery-img {{deliveryInfo.isDelivering ? 'animate-float' : ''}}" 
+             src="/images/delivery_icon.png" 
+             mode="widthFix"></image>
+    </view>
+  </view>
+
+  <view class="category-card">
+    <view class="category-header">
+      <text class="section-title">热门分类</text>
+    </view>
+    <view class="grid-menu">
+      <block wx:for="{{menuItems}}" wx:key="id">
+        <view class="text-grid-item" bindtap="onGridTap" data-id="{{item.id}}">
+          <text class="menu-name">{{item.name}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="recommend-section">
+    <view class="section-header">
+      <text class="section-title">店长推荐</text>
+      <view class="section-more" bindtap="goProductList">
+        <text>查看全部商品</text>
+        <text class="arrow">></text>
+      </view>
+    </view>
+
+    <view class="product-list">
+      <block wx:for="{{products}}" wx:key="id">
+        <view class="product-card" bindtap="goDetail" data-id="{{item.id}}">
+          
+          <view class="img-box {{!item.image ? 'placeholder' : ''}}">
+             <image wx:if="{{item.image}}" class="prod-img" src="{{item.image}}" mode="aspectFill"></image>
+             <view class="sold-out-mask" wx:if="{{item.stock <= 0}}">已售罄</view>
+          </view>
+          
+          <view class="prod-info">
+            <text class="prod-name">{{item.name}}</text>
+            
+            <view class="tags-row">
+               <text class="tag-badge" wx:if="{{item.description}}">{{item.description}}</text>
+            </view>
+            
+            <view class="price-row">
+              <view class="price-box">
+                <text class="currency">¥</text>
+                <text class="price">{{item.price}}</text>
+                <text class="unit" wx:if="{{item.unit}}">/{{item.unit}}</text>
+              </view>
+              
+              <view class="add-btn {{item.stock <= 0 ? 'disabled' : ''}}" 
+                    catchtap="addToCart" 
+                    data-item="{{item}}">
+                {{item.stock <= 0 ? '无' : '+'}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view class="loading-footer">
+      <text wx:if="{{isLoading}}">正在加载更多好货...</text>
+      <text wx:elif="{{products.length > 0}}" class="no-more">—— 已加载全部精选商品 ——</text>
+      <text wx:elif="{{products.length === 0 && !isLoading}}" class="empty">暂无商品</text>
+    </view>
+  </view>
+</view>

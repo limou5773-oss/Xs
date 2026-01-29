@@ -1,0 +1,241 @@
+<!-- pages/order-info/order-info.wxml -->
+<view class="order-info-page">
+
+<!-- 顶部订单状态 -->
+<view class="status-header status-{{order.status}}">
+  <view class="status-content">
+    <view class="status-icon">
+      <text wx:if="{{order.status == 0}}">⏰</text>
+      <text wx:elif="{{order.status == 1}}">📦</text>
+      <text wx:elif="{{order.status == 2}}">🚚</text>
+      <text wx:elif="{{order.status == 3}}">✅</text>
+      <text wx:elif="{{order.status == 5}}">🛠</text>
+      <text wx:else>🚫</text>
+    </view>
+
+    <view class="status-text-box">
+      <!-- 标题：优先用 headerStatusText（带售后结果），否则用原来的 statusText -->
+      <text class="status-title">
+        {{ headerStatusText || statusText[order.status] }}
+      </text>
+
+      <!-- 下面是不同状态的说明文案 -->
+      <text wx:if="{{order.status == 0 && countdownStr}}" class="status-desc">
+        请在 {{countdownStr}} 内完成支付
+      </text>
+      <text wx:elif="{{order.status == 1}}" class="status-desc">
+        商家正在备货中
+      </text>
+      <text wx:elif="{{order.status == 2}}" class="status-desc">
+        商品正在飞奔向你
+      </text>
+      <text wx:elif="{{order.status == 3}}" class="status-desc">
+        感谢您的信任，期待再次光临
+      </text>
+      <text wx:elif="{{order.status == 5}}" class="status-desc">
+        售后处理中，请耐心等待
+      </text>
+      <text wx:else class="status-desc">
+        订单已取消
+      </text>
+    </view>
+  </view>
+</view>
+
+<!-- 地址卡片 -->
+<view class="card address-card-float">
+  <view class="addr-group">
+    <view class="addr-icon">📍</view>
+    <view class="addr-info">
+      <view class="user-row">
+        <text class="name">{{address.name}}</text>
+        <text class="phone">{{address.phone}}</text>
+      </view>
+      <text class="addr-detail">{{address.region}} {{address.detail}}</text>
+    </view>
+  </view>
+</view>
+
+<!-- 商品列表 -->
+<view class="card">
+  <view class="card-header-row">
+    <text class="card-title">商品清单</text>
+  </view>
+  <block wx:for="{{items}}" wx:key="productId">
+    <view class="item">
+      <image class="item-img" src="{{item.cover}}" mode="aspectFill"></image>
+      <view class="item-info">
+        <text class="name">{{item.productName}}</text>
+        <view class="price-row">
+          <text class="price">￥{{item.price}}</text>
+          <text class="qty">x{{item.quantity}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<!-- 售后信息（只有订单在售后，并且有售后记录时显示） -->
+<view class="card refund-card" wx:if="{{order.status == 5 && afterSale}}">
+  <view class="refund-header">
+    <text class="card-title">售后信息</text>
+
+    <!-- 右上角小徽标：根据售后状态显示不同文字 / 颜色 -->
+    <view wx:if="{{afterSale.status == 0}}" class="refund-badge badge-pending">
+      处理中
+    </view>
+    <view wx:elif="{{afterSale.status == 1}}" class="refund-badge badge-success">
+      退款成功
+    </view>
+    <view wx:elif="{{afterSale.status == 2}}" class="refund-badge badge-danger">
+      已拒绝
+    </view>
+    <view wx:elif="{{afterSale.status == 3}}" class="refund-badge badge-close">
+      已取消
+    </view>
+  </view>
+
+  <!-- 退款相关 -->
+  <view class="row-small">
+    <text class="label">退款金额</text>
+    <text class="val price-red">
+      ￥{{ afterSale.refundAmount || order.payPrice }}
+    </text>
+  </view>
+
+  <view class="row-small">
+    <text class="label">申请原因</text>
+    <text class="val">{{afterSale.reason || '—'}}</text>
+  </view>
+
+  <view class="row-small">
+    <text class="label">申请时间</text>
+    <text class="val">{{afterSale.createTime || '—'}}</text>
+  </view>
+
+  <view class="row-small">
+    <text class="label">完成时间</text>
+    <text class="val">{{afterSale.handleTime || '—'}}</text>
+  </view>
+
+  <view class="row-small">
+    <text class="label">处理结果</text>
+    <text class="val">
+      <block wx:if="{{afterSale.status == 0}}">等待商家处理</block>
+      <block wx:elif="{{afterSale.status == 1}}">退款已原路退回，请注意查收</block>
+      <block wx:elif="{{afterSale.status == 2}}">商家已拒绝本次售后申请</block>
+      <block wx:elif="{{afterSale.status == 3}}">您已主动取消本次售后申请</block>
+      <block wx:else>—</block>
+    </text>
+  </view>
+
+  <view class="divider"></view>
+
+  <!-- 订单信息（和你截图一致，放在售后信息下面） -->
+  <view class="row-small">
+    <text class="label">订单编号</text>
+    <text class="val">{{order.orderNo}}</text>
+  </view>
+  <view class="row-small">
+    <text class="label">下单时间</text>
+    <text class="val">{{order.createTime}}</text>
+  </view>
+  <view class="row-small">
+    <text class="label">商品总额</text>
+    <text class="val">￥{{order.totalPrice}}</text>
+  </view>
+  <view class="row-small">
+    <text class="label">运费</text>
+    <text class="val">免运费</text>
+  </view>
+  <view class="row-small">
+    <text class="label">实付金额</text>
+    <text class="pay-price">￥{{order.payPrice}}</text>
+  </view>
+</view>
+
+<!-- 如果不是售后订单，单独显示订单信息卡片 -->
+<view class="card info-card" wx:if="{{!(order.status == 5 && afterSale)}}">
+  <view class="row-small">
+    <text class="label">订单编号</text>
+    <text class="val">{{order.orderNo}}</text>
+  </view>
+  <view class="row-small">
+    <text class="label">下单时间</text>
+    <text class="val">{{order.createTime}}</text>
+  </view>
+  <view class="divider"></view>
+  <view class="row-small">
+    <text class="label">商品总额</text>
+    <text class="val">￥{{order.totalPrice}}</text>
+  </view>
+  <view class="row-small">
+    <text class="label">运费</text>
+    <text class="val">免运费</text>
+  </view>
+  <view class="row-big">
+    <text class="label">实付金额</text>
+    <text class="pay-price">￥{{order.payPrice}}</text>
+  </view>
+</view>
+
+<!-- 底部按钮区域 -->
+<view class="footer-btn-area">
+
+  <!-- 待支付 -->
+  <button wx:if="{{order.status == 0}}"
+          class="main-btn pay-btn"
+          bindtap="onPay">
+    去支付
+  </button>
+
+  <!-- 已完成：可以申请售后 -->
+  <button wx:elif="{{order.status == 3}}"
+          class="main-btn refund-btn"
+          bindtap="applyRefund">
+    申请售后
+  </button>
+
+  <!-- 售后中 & 待处理：显示取消申请 -->
+  <button wx:elif="{{order.status == 5 && afterSale && afterSale.status == 0}}"
+          class="main-btn cancel-btn"
+          bindtap="cancelAfterSale">
+    取消申请
+  </button>
+
+  <!-- 其它情况：再来一单 -->
+  <button wx:else
+          class="main-btn again-btn"
+          bindtap="buyAgain">
+    再来一单
+  </button>
+
+</view>
+
+<!-- 支付弹窗 -->
+<view class="pay-mask {{showPayPopup ? 'show' : ''}}" bindtap="closePayPopup">
+  <view class="pay-panel" catchtap="true">
+    <view class="panel-header">
+      <text class="panel-title">确认付款</text>
+      <view class="close-icon" bindtap="closePayPopup">×</view>
+    </view>
+
+    <view class="price-area">
+      <text class="currency">¥</text>
+      <text class="amount">{{order.payPrice}}</text>
+    </view>
+
+    <view class="pay-method">
+      <view class="method-row">
+        <text class="method-label">支付方式</text>
+        <view class="method-val">
+          <text class="wx-icon">🟢</text> 微信支付
+        </view>
+      </view>
+    </view>
+
+    <button class="confirm-pay-btn" bindtap="executePay">立即支付</button>
+  </view>
+</view>
+
+</view>

@@ -1,0 +1,386 @@
+/* pages/product-list/product-list.wxss */
+page {
+    height: 100%;
+    background-color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  }
+  
+  .main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* ... 前面的 Header, Left-menu, Right-content 样式保持不变 ... */
+  /* (为了节省篇幅，上面的代码这里省略，请保留你原来的) */
+  
+  .header {
+    height: 100rpx;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 24rpx;
+    border-bottom: 1rpx solid #f5f5f5;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  .search-bar {
+    flex: 1;
+    height: 70rpx;
+    background: #f7f8fa;
+    border-radius: 35rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 24rpx;
+  }
+  .search-input {
+    flex: 1;
+    font-size: 28rpx;
+    margin: 0 16rpx;
+  }
+  .content-box {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+  .left-menu {
+    width: 180rpx;
+    background-color: #f7f8fa;
+    height: 100%;
+  }
+  .left-menu ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
+  .menu-item {
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26rpx;
+    color: #666;
+    position: relative;
+  }
+  .menu-item.active {
+    background-color: #fff;
+    color: #333;
+    font-weight: bold;
+    font-size: 28rpx;
+  }
+  .menu-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 30rpx;
+    bottom: 30rpx;
+    width: 8rpx;
+    background-color: #07c160;
+    border-radius: 0 4rpx 4rpx 0;
+  }
+  .right-content {
+    flex: 1;
+    height: 100%;
+    background-color: #fff;
+  }
+  .right-content ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
+  .section-header {
+    padding: 20rpx 24rpx;
+    font-size: 26rpx;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  /* 分类下面商品区域 */
+  .product-box {
+    padding-bottom: 10rpx;
+  }
+  
+  .product-item {
+    display: flex;
+    padding: 20rpx 24rpx;
+    margin-bottom: 10rpx;
+  }
+  .img-wrapper {
+    width: 150rpx;
+    height: 150rpx;
+    border-radius: 12rpx;
+    background-color: #f9f9f9;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .prod-img {
+    width: 100%;
+    height: 100%;
+  }
+  .sold-out-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22rpx;
+    font-weight: bold;
+  }
+  .prod-info {
+    flex: 1;
+    margin-left: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 4rpx;
+  }
+  .name {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 4rpx;
+  }
+  .desc {
+    font-size: 22rpx;
+    color: #999;
+    white-space: nowarp;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .stock-row {
+    margin-top: 4rpx;
+  }
+  .stock-text {
+    font-size: 20rpx;
+    color: #999;
+    background: #f2f2f2;
+    padding: 2rpx 8rpx;
+    border-radius: 4rpx;
+  }
+  .stock-text.low-stock {
+    color: #ff4d4f;
+    background: #fff1f0;
+  }
+  .price-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10rpx;
+  }
+  .price-box {
+    display: flex;
+    align-items: baseline;
+  }
+  .currency {
+    font-size: 24rpx;
+    color: #07c160;
+    font-weight: bold;
+  }
+  .price {
+    font-size: 34rpx;
+    color: #07c160;
+    font-weight: bold;
+    margin-left: 2rpx;
+  }
+  .unit {
+    font-size: 22rpx;
+    color: #999;
+    margin-left: 4rpx;
+  }
+  
+  /* 分类无商品提示 */
+  .empty-tip {
+    padding: 40rpx 24rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: #999;
+  }
+  
+  /* ⭐⭐⭐ 1. 初始加号 (没选过时，显示绿色实心圆) ⭐⭐⭐ */
+  .circle-add-btn {
+    width: 48rpx;
+    height: 48rpx;
+    background: #07c160;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36rpx;
+    font-weight: bold;
+    box-shadow: 0 2rpx 6rpx rgba(7, 193, 96, 0.2);
+  }
+  .circle-add-btn.disabled {
+    background: #ccc;
+    box-shadow: none;
+  }
+  
+  /* ⭐⭐⭐ 2. 步进器条 (选过之后，变成灰色胶囊) ⭐⭐⭐ */
+  .stepper-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8; /* 浅灰底 */
+    border-radius: 30rpx;
+    height: 52rpx;
+    padding: 0 6rpx;
+  }
+  
+  /* 按钮通用样式 (去掉背景和边框，变成纯文字符号) */
+  .step-btn {
+    width: 50rpx;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36rpx;
+    font-weight: bold;
+  }
+  
+  /* 减号：灰色 */
+  .step-btn.minus {
+    color: #999;
+  }
+  
+  /* 加号：绿色 */
+  .step-btn.plus {
+    color: #07c160;
+  }
+  
+  /* 禁用态：灰色 */
+  .step-btn.plus.disabled {
+    color: #ccc;
+  }
+  
+  /* 数字 */
+  .step-num {
+    min-width: 36rpx;
+    text-align: center;
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* ⭐⭐⭐ 3. 修复点击穿透 Bug ⭐⭐⭐ */
+  /* 这一句非常重要！ */
+  /* 之前的 pointer-events: none 会导致点击穿透到下面的 product-item */
+  /* 现在改为 auto，确保即使禁用了，点击也会被这个按钮捕获，而不会透下去 */
+  .disabled {
+    pointer-events: auto !important;
+    opacity: 0.5;
+  }
+  
+  /* 底部悬浮条 */
+  .cart-bar-wrapper {
+    position: fixed;
+    bottom: 30rpx;
+    left: 24rpx;
+    right: 24rpx;
+    z-index: 99;
+  }
+  .cart-bar {
+    height: 100rpx;
+    background-color: #222;
+    border-radius: 50rpx;
+    display: flex;
+    align-items: center;
+    padding-left: 130rpx;
+    padding-right: 6rpx;
+    box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+  .cart-icon-box {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 110rpx;
+    height: 110rpx;
+    background: #333;
+    border-radius: 50%;
+    border: 8rpx solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s;
+  }
+  .cart-icon-box.active {
+    background: #07c160;
+    border-color: #222;
+  }
+  .cart-icon-box.bounce {
+    animation: bounce 0.3s ease-in-out;
+  }
+  .cart-icon {
+    width: 60rpx;
+    height: 60rpx;
+  }
+  .badge {
+    position: absolute;
+    top: -6rpx;
+    right: -6rpx;
+    background: #ff4d4f;
+    color: #fff;
+    font-size: 20rpx;
+    padding: 4rpx 12rpx;
+    border-radius: 20rpx;
+    border: 2rpx solid #fff;
+  }
+  .price-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .total-price {
+    font-size: 36rpx;
+    color: #fff;
+    font-weight: bold;
+  }
+  .total-price.empty {
+    font-size: 28rpx;
+    color: #999;
+  }
+  .sub-text {
+    font-size: 20rpx;
+    color: #888;
+  }
+  .pay-btn {
+    width: 200rpx;
+    height: 88rpx;
+    background: #444;
+    color: #999;
+    border-radius: 0 44rpx 44rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30rpx;
+    font-weight: bold;
+  }
+  .pay-btn.active {
+    background: #07c160;
+    color: #fff;
+  }
+  .pay-btn:active {
+    opacity: 0.8;
+  }
+  @keyframes bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  

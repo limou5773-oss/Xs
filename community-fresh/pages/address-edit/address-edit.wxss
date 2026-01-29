@@ -1,0 +1,166 @@
+/* 全局背景 */
+.edit-page {
+    background-color: #F7F8FA;
+    min-height: 100vh;
+    padding-bottom: 240rpx;
+    box-sizing: border-box;
+    padding-top: 20rpx;
+  }
+  
+  /* 顶部标题 */
+  .page-header {
+    padding: 20rpx 40rpx 30rpx;
+  }
+  
+  .title {
+    font-size: 40rpx;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+  
+  /* --- 通用表单卡片 --- */
+  .form-card {
+    width: 92%;
+    margin: 0 auto 30rpx;
+    background: #fff;
+    border-radius: 24rpx;
+    padding: 0 32rpx; /* 上下padding交给item */
+    box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.02);
+    box-sizing: border-box;
+    
+    /* 进场动画 */
+    opacity: 0;
+    animation: slideUp 0.5s ease-out forwards;
+  }
+  
+  .delay-1 { animation-delay: 0.1s; }
+  
+  /* 表单行 */
+  .form-item {
+    display: flex;
+    align-items: center;
+    min-height: 110rpx; /* 增加高度，便于点击 */
+    border-bottom: 1rpx solid #F5F7FA;
+  }
+  
+  .no-border { border-bottom: none; }
+  
+  /* 如果是多行文本，顶对齐 */
+  .align-top {
+    align-items: flex-start;
+    padding-top: 36rpx;
+    padding-bottom: 36rpx;
+  }
+  
+  /* 左侧标签 */
+  .label {
+    width: 160rpx; /* 固定宽度，对齐 */
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* 右侧输入框 */
+  .input {
+    flex: 1;
+    font-size: 30rpx;
+    color: #333;
+    height: 100%;
+  }
+  
+  /* 占位符样式 */
+  .ph-style {
+    color: #ccc;
+    font-weight: normal;
+  }
+  
+  /* 地区选择器 */
+  .picker-box {
+    flex: 1;
+  }
+  .picker-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .picker-text { font-size: 30rpx; color: #333; }
+  .picker-placeholder { font-size: 30rpx; color: #ccc; }
+  
+  .arrow {
+    color: #ddd;
+    font-size: 32rpx;
+    margin-left: 10rpx;
+  }
+  
+  /* 多行文本域 */
+  .textarea {
+    flex: 1;
+    font-size: 30rpx;
+    color: #333;
+    line-height: 1.5;
+    min-height: 120rpx; /* 默认给高一点 */
+  }
+  
+  /* --- 开关卡片 --- */
+  .switch-card {
+    padding: 30rpx 32rpx;
+  }
+  
+  .switch-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .switch-title {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+    display: block;
+  }
+  
+  .switch-desc {
+    font-size: 24rpx;
+    color: #999;
+    margin-top: 6rpx;
+  }
+  
+  /* --- 底部保存按钮 --- */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    padding: 24rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+    padding-bottom: 80rpx; 
+    box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.03);
+    z-index: 100;
+    box-sizing: border-box; /* 确保宽度不会溢出 */
+  }
+  
+  .save-btn {
+    width: 100%;
+    height: 90rpx;
+    line-height: 90rpx;
+    border-radius: 45rpx;
+    background: linear-gradient(135deg, #07c160, #05a955);
+    color: #fff;
+    font-size: 32rpx;
+    font-weight: 600;
+    box-shadow: 0 10rpx 24rpx rgba(7, 193, 96, 0.25);
+    /* 消除默认边框 */
+    border: none;
+  }
+  
+  .save-btn:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+  
+  /* 动画定义 */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30rpx); }
+    to { opacity: 1; transform: translateY(0); }
+  }

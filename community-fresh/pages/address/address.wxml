@@ -1,0 +1,55 @@
+<view class="address-page">
+  
+  <view class="bg-gradient"></view>
+
+  <view class="page-header">
+    <text class="main-title">我的收货地址</text>
+    <text class="sub-info" wx:if="{{addresses.length > 0}}">{{addresses.length}} / 20</text>
+  </view>
+
+  <view class="list-container" wx:if="{{addresses.length > 0}}">
+    <block wx:for="{{addresses}}" wx:key="id">
+      
+      <view class="address-card animate-card {{item.isDefault ? 'card-default' : ''}}" 
+            bindtap="chooseAddress" 
+            data-item="{{item}}">
+        
+        <view class="info-section">
+          <view class="user-row">
+            <text class="name">{{item.name}}</text>
+            <text class="phone">{{item.phone}}</text>
+            <view wx:if="{{item.isDefault}}" class="tag-default">默认</view>
+          </view>
+          
+          <view class="address-row">
+            <text class="icon-loc">📍</text>
+            <text class="detail">{{item.region}} {{item.detail}}</text>
+          </view>
+        </view>
+
+        <view class="action-bar">
+          <view class="btn-item edit" catchtap="goEdit" data-id="{{item.id}}">
+            <text class="btn-icon">✎</text> 编辑
+          </view>
+          <view class="vertical-line"></view>
+          <view class="btn-item delete" catchtap="deleteAddress" data-id="{{item.id}}">
+            <text class="btn-icon">🗑</text> 删除
+          </view>
+        </view>
+
+      </view>
+    </block>
+  </view>
+
+  <view wx:else class="empty-state animate-fade-in">
+    <image src="/assets/empty-box.png" class="empty-img" mode="aspectFit"></image>
+    <text class="empty-title">暂无收货地址</text>
+    <text class="empty-desc">去添加一个吧</text>
+  </view>
+
+  <view class="footer-bar">
+    <button class="add-btn" bindtap="goAdd">
+      <text class="plus">+</text> 新建收货地址
+    </button>
+  </view>
+</view>

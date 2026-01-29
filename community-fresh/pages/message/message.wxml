@@ -1,0 +1,15 @@
+<view class="message-page">
+  <block wx:for="{{list}}" wx:key="id">
+    <view class="msg-card">
+      <view class="msg-header">
+        <text class="msg-title">{{item.title}}</text>
+        <text class="msg-time">{{item.createTime}}</text>
+      </view>
+      <view class="msg-body">{{item.content}}</view>
+    </view>
+  </block>
+
+  <view wx:if="{{!list.length}}" class="empty">
+    <text>暂无消息</text>
+  </view>
+</view>

@@ -1,0 +1,274 @@
+/* --- 1. 全局背景 & 光影 --- */
+.profile-page {
+    background-color: #F8FAFC; /* 冷灰白 */
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden; 
+    padding: 0 30rpx 60rpx;
+    box-sizing: border-box;
+  }
+  
+  /* 装饰光斑 */
+  .bg-decoration {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80rpx);
+    opacity: 0.6;
+    z-index: 0;
+  }
+  
+  .top-circle {
+    width: 400rpx;
+    height: 400rpx;
+    background: #D1FAE5; /* 浅绿光斑 */
+    top: -100rpx;
+    right: -100rpx;
+  }
+  
+  .bottom-circle {
+    width: 300rpx;
+    height: 300rpx;
+    background: #E0F2FE; /* 浅蓝光斑 */
+    bottom: 100rpx;
+    left: -50rpx;
+  }
+  
+  /* --- 2. 头部用户信息 --- */
+  .header-area {
+    position: relative;
+    z-index: 1;
+    margin-top: 100rpx;
+    margin-bottom: 50rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-info-box {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 50%;
+    border: 4rpx solid rgba(255, 255, 255, 0.8); 
+    background-color: #fff;
+    box-shadow: 0 10rpx 20rpx rgba(0,0,0,0.05);
+  }
+  
+  .text-group {
+    margin-left: 30rpx;
+  }
+  
+  .name-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10rpx;
+  }
+  
+  .nickname {
+    font-size: 44rpx;
+    font-weight: 800;
+    color: #1E293B;
+  }
+  
+  .sub-text {
+    font-size: 26rpx;
+    color: #64748B;
+  }
+  
+  .arrow-right {
+    font-size: 40rpx;
+    color: #ccc;
+    margin-right: 10rpx;
+    padding-bottom: 10rpx;
+  }
+  
+  /* --- 3. 订单卡片 --- */
+  .section-card {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 32rpx;
+    padding: 30rpx;
+    box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.03);
+    margin-bottom: 50rpx;
+  }
+  
+  .sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30rpx;
+  }
+  
+  .sec-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .sec-more {
+    font-size: 26rpx;
+    color: #94A3B8;
+  }
+  
+  .icon-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+  }
+  
+  .icon-bg {
+    width: 90rpx;
+    height: 90rpx;
+    border-radius: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16rpx;
+    position: relative;
+    font-size: 40rpx;
+  }
+  
+  .bg-orange { background: #FFEDD5; color: #F97316; }
+  .bg-blue   { background: #E0F2FE; color: #0EA5E9; }
+  .bg-green  { background: #D1FAE5; color: #10B981; }
+  .bg-gray   { background: #F1F5F9; color: #64748B; }
+  
+  .img-icon {
+    width: 50rpx;
+    height: 50rpx;
+  }
+  
+  .icon-label {
+    font-size: 26rpx;
+    color: #475569;
+    font-weight: 500;
+  }
+  
+  .dot {
+    position: absolute;
+    top: -4rpx;
+    right: -4rpx;
+    width: 16rpx;
+    height: 16rpx;
+    background: #EF4444;
+    border: 4rpx solid #fff;
+    border-radius: 50%;
+  }
+  
+  /* --- 4. 常用服务 (网格) --- */
+  .section-title {
+    position: relative;
+    z-index: 1;
+    font-size: 34rpx;
+    font-weight: 800;
+    color: #1E293B;
+    margin-bottom: 24rpx;
+    margin-left: 10rpx;
+  }
+  
+  .grid-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .grid-box {
+    width: 48%; /* 两列 */
+    background: #fff;
+    border-radius: 28rpx;
+    padding: 30rpx;
+    box-sizing: border-box;
+    margin-bottom: 24rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .grid-box:active {
+    transform: scale(0.98);
+  }
+  
+  .grid-icon {
+    font-size: 48rpx;
+    margin-bottom: 20rpx;
+  }
+  
+  .grid-text {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 6rpx;
+  }
+  
+  .grid-desc {
+    font-size: 24rpx;
+    color: #94A3B8;
+  }
+  
+  /* --- 5. 底部退出登录 --- */
+  .footer-area {
+    margin-top: 60rpx;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .logout-text {
+    display: inline-block;
+    color: #94A3B8;
+    font-size: 28rpx;
+    padding: 20rpx 40rpx;
+    text-decoration: underline; /* 加个下划线更有链接感 */
+    text-decoration-color: #E2E8F0;
+  }
+/* --- 5. 底部退出登录 (纯白悬浮版) --- */
+.footer-area {
+    margin-top: 40rpx;
+    padding-bottom: 60rpx;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .logout-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    width: 85%; /* 稍微宽一点点 */
+    height: 96rpx;
+    
+    /* ⭐ 改为纯白背景，不再暗淡 */
+    background-color: #ffffff; 
+    border-radius: 48rpx;
+    
+    /* 字体设置 */
+    font-size: 32rpx;
+    color: #FF4D4F; /* 鲜艳的红 */
+    font-weight: 600;
+    letter-spacing: 2rpx;
+    
+    /* ⭐ 加一个干净的投影，让它浮在灰色背景上 */
+    box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.04);
+  }
+  
+  /* 点击时的反馈 */
+  .logout-text:active {
+    background-color: #fcfcfc;
+    transform: scale(0.98);
+    opacity: 0.9;
+  }

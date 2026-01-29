@@ -1,0 +1,109 @@
+<view class="order-page">
+  
+  <view class="tabs-wrapper">
+    <scroll-view class="tabs" scroll-x enable-flex>
+      <block wx:for="{{tabs}}" wx:key="status">
+        <view class="tab-item {{activeStatus == item.status ? 'active' : ''}}" data-status="{{item.status}}" bindtap="onTabTap">
+          {{item.text}}
+          <view class="tab-line" wx:if="{{activeStatus == item.status}}"></view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+
+  <view class="list-container" wx:if="{{filtered.length > 0}}">
+    <block wx:for="{{filtered}}" wx:key="id">
+      
+      <view class="order-card animate-slide-up" bindtap="goDetail" data-id="{{item.id}}">
+        <view class="card-header">
+        
+          <view class="header-left">
+            <block wx:if="{{item.status == 0 && item.countdownStr}}">
+              <text class="icon-time">⏰</text>
+              <text class="countdown-highlight">{{item.countdownStr}}</text>
+              <text class="countdown-label">后取消</text>
+            </block>
+            <block wx:else>
+              <text class="order-time">{{item.createTimeDisplay}}</text>
+            </block>
+          </view>
+
+          <!-- 这里改成根据售后状态显示文案 -->
+          <text class="status-text" style="color: {{statusColor[item.status]}}">
+            {{ item.status == 5 && item.afterSaleText ? item.afterSaleText : statusText[item.status] }}
+          </text>
+        </view>
+
+        <view class="card-body">
+          <view class="single-item" wx:if="{{item.items.length === 1}}">
+            <image class="goods-img" src="{{item.items[0].cover}}" mode="aspectFill"></image>
+            <view class="goods-info">
+              <text class="goods-name">{{item.items[0].productName}}</text>
+              <text class="goods-qty">x{{item.items[0].quantity}}</text>
+            </view>
+          </view>
+          <scroll-view class="goods-scroll" scroll-x wx:elif="{{item.items.length > 1}}">
+            <view class="goods-row">
+              <block wx:for="{{item.items}}" wx:for-item="goods" wx:key="id">
+                <image class="goods-img-small" src="{{goods.cover}}" mode="aspectFill"></image>
+              </block>
+            </view>
+          </scroll-view>
+          <view wx:else class="no-goods-tip"><text>订单号：{{item.orderNo}}</text></view>
+        </view>
+
+        <view class="card-footer">
+          <view class="total-row">
+            <text class="count-text">共 {{item.items.length}} 件</text>
+            <text class="total-label">实付</text>
+            <text class="price-symbol">￥</text>
+            <text class="price-num">{{item.total}}</text>
+          </view>
+          
+          <view class="btn-row">
+            <button 
+              wx:if="{{item.status == 0}}" 
+              class="btn-action pay-btn" 
+              catchtap="onPay" 
+              data-item="{{item}}">
+              去支付
+            </button>
+            <button wx:else class="btn-action default" catchtap="goDetail" data-id="{{item.id}}">查看详情</button>
+          </view>
+        </view>
+
+      </view>
+    </block>
+  </view>
+
+  <view wx:else class="empty-state">
+    <image src="/assets/empty-box.png" class="empty-img" mode="aspectFit"></image>
+    <text class="empty-text">暂无相关订单</text>
+  </view>
+
+</view>
+
+<view class="pay-mask {{showPayPopup ? 'show' : ''}}" bindtap="closePayPopup">
+  <view class="pay-panel" catchtap="true">
+    <view class="panel-header">
+      <text class="panel-title">确认付款</text>
+      <view class="close-icon" bindtap="closePayPopup">×</view>
+    </view>
+    
+    <view class="price-area">
+      <text class="currency">¥</text>
+      <text class="amount">{{curPayOrder.total}}</text>
+    </view>
+
+    <view class="pay-method">
+      <view class="method-row">
+        <text class="method-label">支付方式</text>
+        <view class="method-val">
+          <text class="wx-icon">🟢</text> 微信支付
+        </view>
+      </view>
+    </view>
+
+    <button class="confirm-pay-btn" bindtap="executePay">立即支付</button>
+  </view>
+</view>

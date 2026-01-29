@@ -1,0 +1,32 @@
+<view class="container">
+  
+  <view class="card">
+    <view class="title">售后类型</view>
+    <view class="type-box">
+      <view class="type-item {{type == 1 ? 'active' : ''}}" bindtap="selectType" data-type="1">
+        仅退款 (无需退货)
+      </view>
+      <view class="type-item {{type == 2 ? 'active' : ''}}" bindtap="selectType" data-type="2">
+        退货退款
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="title">申请原因</view>
+    <textarea 
+      class="input-area" 
+      placeholder="请详细描述您遇到的问题，如：商品损坏、少件错发等..." 
+      placeholder-class="ph-style"
+      bindinput="onInput" 
+      value="{{reason}}" 
+      maxlength="200"
+    />
+    <view class="word-count">{{reason.length}}/200</view>
+  </view>
+  
+  <view class="footer">
+    <button class="submit-btn" bindtap="submit">提交申请</button>
+  </view>
+
+</view>

@@ -1,0 +1,46 @@
+{
+    "pages": [
+      "pages/home/home",
+      "pages/category/category",
+      "pages/cart/cart",
+      "pages/profile/profile",
+      "pages/login/login",
+      "pages/order/order",
+      "pages/message/message",
+      "pages/edit-profile/edit-profile",
+      "pages/checkout/checkout",
+      "pages/address/address",
+      "pages/address-edit/address-edit",
+      "pages/product-list/product-list",
+      "pages/product-detail/product-detail",
+      "pages/order-info/order-info",
+      "pages/refund/refund"
+    ],
+    "window": {
+      "backgroundTextStyle": "light",
+      "navigationBarBackgroundColor": "#ffffff",
+      "navigationBarTitleText": "社区生鲜",
+      "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+      "color": "#999999",
+      "selectedColor": "#07c160",
+      "backgroundColor": "#ffffff",
+      "borderStyle": "black",
+      "list": [
+        {
+          "pagePath": "pages/home/home",
+          "text": "首页"
+        },
+        {
+          "pagePath": "pages/product-list/product-list",
+          "text": "选购"
+        },
+        {
+          "pagePath": "pages/profile/profile",
+          "text": "我的"
+        }
+      ]
+    }
+  }
+  

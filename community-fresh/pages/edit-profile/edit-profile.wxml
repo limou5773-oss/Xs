@@ -1,0 +1,19 @@
+<view class="edit-container">
+  
+  <view class="avatar-box">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{avatarUrl || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+    </button>
+    <text class="tip">点击图片更换头像</text>
+  </view>
+
+  <view class="form-box">
+    <view class="form-item">
+      <text class="label">昵称</text>
+      <input class="input" type="nickname" value="{{nickname}}" bindchange="onNicknameChange" placeholder="请输入昵称" placeholder-class="placeholder" />
+    </view>
+  </view>
+
+  <button class="save-btn" bindtap="saveProfile" loading="{{isSaving}}">保存资料</button>
+
+</view>

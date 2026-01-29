@@ -1,0 +1,67 @@
+<view class="container">
+  
+  <view class="main-box">
+    
+    <scroll-view class="left-menu" scroll-y>
+      <block wx:for="{{categoryList}}" wx:key="id">
+        <view class="menu-item {{activeId === item.id ? 'active' : ''}}" 
+              bindtap="onMenuClick" 
+              data-id="{{item.id}}">
+          {{item.name}}
+        </view>
+      </block>
+    </scroll-view>
+
+    <scroll-view class="right-content" scroll-y scroll-into-view="{{toView}}" scroll-with-animation>
+      <block wx:for="{{categoryList}}" wx:key="id" wx:for-item="cat">
+        <view class="section-header" id="cat_{{cat.id}}">{{cat.name}}</view>
+        
+        <view class="product-box">
+          <block wx:for="{{cat.products}}" wx:key="id" wx:for-item="prod">
+            <view class="product-item" bindtap="goDetail" data-id="{{prod.id}}">
+              <image class="prod-img" src="{{prod.image}}" mode="aspectFill"></image>
+              
+              <view class="prod-info">
+                <text class="name">{{prod.name}}</text>
+                <text class="desc">{{prod.description || '暂无描述'}}</text>
+                
+                <view class="price-action">
+                  <text class="price">¥{{prod.price}}</text>
+                  
+                  <view class="stepper">
+                    <view class="btn minus" catchtap="updateCart" data-item="{{prod}}" data-type="minus" wx:if="{{prod.cartNum > 0}}">-</view>
+                    <text class="num" wx:if="{{prod.cartNum > 0}}">{{prod.cartNum}}</text>
+                    <view class="btn plus" catchtap="updateCart" data-item="{{prod}}" data-type="plus">+</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+      
+      <view style="height: 180rpx;"></view>
+    </scroll-view>
+  </view>
+
+  <view class="cart-bar-container">
+    <view class="cart-bar" bindtap="goCart">
+      
+      <view class="cart-icon-wrapper {{totalCount > 0 ? 'active' : ''}}">
+        <image src="/images/tabbar/cart_active.png" class="cart-icon-img"></image>
+        <view class="badge" wx:if="{{totalCount > 0}}">{{totalCount}}</view>
+      </view>
+
+      <view class="price-info">
+        <view class="total-price" wx:if="{{totalCount > 0}}">¥{{totalPrice}}</view>
+        <view class="total-price empty" wx:else>未选购商品</view>
+        <text class="sub-text">免配送费</text>
+      </view>
+
+      <view class="checkout-btn {{totalCount > 0 ? 'active' : ''}}" catchtap="goCheckout">
+        去结算
+      </view>
+    </view>
+  </view>
+
+</view>

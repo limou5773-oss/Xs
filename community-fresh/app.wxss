@@ -1,0 +1,8 @@
+page {
+    background-color: #f6f6f6;
+    font-family: "PingFang SC", sans-serif;
+  }
+  button {
+    border-radius: 8rpx;
+  }
+  

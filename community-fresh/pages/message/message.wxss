@@ -1,0 +1,7 @@
+.message-page { padding: 20rpx; background: #f7f7f7; min-height: 100vh; }
+.msg-card { background: #fff; border-radius: 10rpx; padding: 20rpx; margin-bottom: 20rpx; box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.1); }
+.msg-header { display: flex; justify-content: space-between; margin-bottom: 10rpx; }
+.msg-title { font-size: 30rpx; font-weight: bold; color: #333; }
+.msg-time { font-size: 24rpx; color: #999; }
+.msg-body { font-size: 28rpx; color: #555; }
+.empty { text-align: center; color: #aaa; margin-top: 100rpx; }

@@ -1,0 +1,94 @@
+<view class="container">
+  
+  <view class="page-header">
+    <view class="header-left">
+      <text class="header-title">购物车</text>
+      <text class="header-count" wx:if="{{totalCount > 0}}">({{totalCount}})</text>
+    </view>
+    <view class="manage-btn" bindtap="toggleEditMode" wx:if="{{cartList.length > 0}}">
+      {{isEditMode ? '完成' : '管理'}}
+    </view>
+  </view>
+
+  <view class="top-banner" bindtap="goAllProducts">
+    <view class="banner-text">
+      <text class="main-txt">再逛逛</text>
+      <text class="sub-txt">全场生鲜 · 新鲜直达</text>
+    </view>
+    <view class="go-arrow">去选购 ></view>
+  </view>
+
+  <view class="cart-list" wx:if="{{cartList.length > 0}}">
+    <block wx:for="{{cartList}}" wx:key="id">
+      <view class="cart-item">
+        <view class="checkbox-area" bindtap="toggleCheck" data-id="{{item.id}}" data-checked="{{item.checked}}">
+          <icon type="{{item.checked ? 'success' : 'circle'}}" color="{{item.checked ? '#07c160' : '#ccc'}}" size="22"></icon>
+        </view>
+        <image class="goods-img" src="{{item.cover}}" mode="aspectFill" bindtap="goDetail" data-pid="{{item.productId}}"></image>
+        <view class="goods-info">
+          <view class="info-top">
+            <text class="goods-name">{{item.productName}}</text>
+          </view>
+          <view class="action-row">
+            <text class="price">¥{{item.price}}</text>
+            <view class="stepper">
+              <view class="btn minus {{item.quantity <= 1 ? 'disabled' : ''}}" catchtap="updateQuantity" data-id="{{item.id}}" data-type="minus">-</view>
+              <text class="num">{{item.quantity}}</text>
+              <view class="btn plus" catchtap="updateQuantity" data-id="{{item.id}}" data-type="plus">+</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="empty-state" wx:if="{{cartList.length === 0}}">
+    <image src="/images/tabbar/cart.png" class="empty-icon"></image>
+    <text class="empty-text">购物车空空如也</text>
+  </view>
+
+  <view class="recommend-box">
+    <view class="rec-header">
+      <view class="line"></view>
+      <text class="rec-title">💎 猜你喜欢 💎</text>
+      <view class="line"></view>
+    </view>
+    <view class="rec-list">
+      <block wx:for="{{recommendList}}" wx:key="id">
+        <view class="rec-item" bindtap="goDetail" data-id="{{item.id}}">
+          <image src="{{item.image}}" mode="aspectFill" class="rec-img"></image>
+          <text class="rec-name">{{item.name}}</text>
+          <view class="rec-price-row">
+            <text class="rec-price">¥{{item.price}}</text>
+            <view class="rec-add">+</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view style="height: 140rpx;"></view>
+
+  <view class="footer-bar-wrapper" wx:if="{{cartList.length > 0}}">
+    <view class="footer-bar">
+      <view class="select-all" bindtap="toggleAll">
+        <icon type="{{isAllChecked ? 'success' : 'circle'}}" color="{{isAllChecked ? '#07c160' : '#999'}}" size="22"></icon>
+        <text class="select-text">全选</text>
+      </view>
+      
+      <block wx:if="{{!isEditMode}}">
+        <view class="total-box">
+          <text class="label">合计:</text>
+          <text class="total-price">¥{{totalPrice}}</text>
+        </view>
+        <view class="checkout-btn" bindtap="goCheckout">去结算({{totalCount}})</view>
+      </block>
+
+      <block wx:else>
+        <view class="total-box"></view>
+        <view class="delete-confirm-btn" bindtap="batchDelete">删除</view>
+      </block>
+
+    </view>
+  </view>
+</view>

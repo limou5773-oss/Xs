@@ -1,0 +1,108 @@
+<view class="checkout-page">
+
+<view class="address-card" bindtap="goAddressList">
+  <view class="color-line-top"></view>
+  
+  <view class="card-content">
+    <block wx:if="{{address}}">
+      <view class="addr-icon-box">
+        <text class="icon-loc">📍</text>
+      </view>
+      <view class="addr-info">
+        <view class="user-row">
+          <text class="name">{{address.name}}</text>
+          <text class="phone">{{address.phone}}</text>
+          <text class="tag-default" wx:if="{{address.isDefault}}">默认</text>
+        </view>
+        <text class="addr-text">{{address.region}} {{address.detail}}</text>
+      </view>
+      <text class="arrow">›</text>
+    </block>
+
+    <block wx:else>
+      <view class="no-addr">
+        <view class="add-btn-icon">+</view>
+        <text>请选择收货地址</text>
+      </view>
+      <text class="arrow">›</text>
+    </block>
+  </view>
+</view>
+
+<view class="section-card">
+  <view class="card-header">商品清单</view>
+
+  <view class="goods-list">
+    <block wx:for="{{goodsList}}" wx:key="id">
+      <view class="goods-item">
+        <image class="goods-img" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.productName}}</text>
+          <view class="goods-sub">
+            <text class="price">¥{{item.price}}</text>
+            <text class="num">x{{item.quantity}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="bill-section">
+    <view class="bill-row">
+      <text>商品总额</text>
+      <text class="bill-val">¥{{totalPrice}}</text>
+    </view>
+    <view class="bill-row">
+      <text>配送费</text>
+      <text class="bill-val">免运费</text>
+    </view>
+    <view class="bill-row remark-row">
+      <text>订单备注</text>
+      <input class="remark-input" placeholder="选填，建议先与商家沟通" placeholder-class="ph-style" bindinput="onRemarkInput" />
+    </view>
+  </view>
+
+  <view class="card-footer">
+    <text class="total-count">共 {{totalCount}} 件</text>
+    <text class="total-label">小计：</text>
+    <text class="final-price">¥{{totalPrice}}</text>
+  </view>
+</view>
+
+<view style="height: 180rpx;"></view>
+
+<view class="submit-bar">
+  <view class="left-box">
+    <text class="label">实付：</text>
+    <text class="symbol">¥</text>
+    <text class="pay-num">{{totalPrice}}</text>
+  </view>
+  <button class="btn-submit" bindtap="submitOrder">提交订单</button>
+</view>
+
+</view>
+
+<view class="pay-mask {{showPayPopup ? 'show' : ''}}" bindtap="cancelPay">
+<view class="pay-panel" catchtap="true">
+  <view class="panel-header">
+    <text class="panel-title">确认付款</text>
+    <view class="close-icon" bindtap="cancelPay">×</view>
+  </view>
+  
+  <view class="price-area">
+    <text class="currency">¥</text>
+    <text class="amount">{{totalPrice}}</text>
+  </view>
+
+  <view class="pay-method">
+    <view class="method-row">
+      <text class="method-label">支付方式</text>
+      <view class="method-val">
+        <text class="wx-icon">🟢</text> 微信支付
+      </view>
+    </view>
+  </view>
+
+  <button class="confirm-pay-btn" bindtap="confirmPay">立即支付</button>
+</view>
+</view>
