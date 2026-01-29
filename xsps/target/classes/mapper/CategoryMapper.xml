@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sxps.xsps.mapper.CategoryMapper">
+
+    <select id="page" resultType="com.sxps.xsps.pojo.Category">
+        SELECT id, name, create_time AS createTime, update_time AS updateTime
+        FROM category
+
+        <if test="p.keyword != null and p.keyword != ''">
+            WHERE name LIKE CONCAT('%', #{p.keyword}, '%')
+        </if>
+
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>
