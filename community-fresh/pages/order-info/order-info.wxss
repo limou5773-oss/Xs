@@ -6,42 +6,47 @@
   }
   
   /* 顶部状态区域 */
-
- /* 顶部状态区域 */
-    .status-header {
-        padding: 48rpx 32rpx 80rpx;
-        color: #fff;
-        border-radius: 0 0 32rpx 32rpx;
-        }
-        /* 0：待支付（红橙） */
-    .status-0 {
-        background: linear-gradient(135deg, #ff7a7a, #ff4949);
-    }
-    
-    /* 1：待发货（蓝色） */
-    .status-1 {
-        background: linear-gradient(135deg, #4facfe, #00c3ff);
-    }
-    
-    /* 2：配送中（橙黄） */
-    .status-2 {
-        background: linear-gradient(135deg, #4facfe, #00c3ff);
-    }
-    
-    /* 3：已完成（绿色） */
-    .status-3 {
-        background: linear-gradient(135deg, #90ceaa, #1abc9c);
-    }
-    
-    /* 4：已取消（灰色） */
-    .status-4 {
-        background: linear-gradient(135deg, #cfd9df, #e2ebf0);
-    }
-    
-    /* 5：售后相关（橙黄） */
-    .status-5 {
-        background: linear-gradient(135deg, #ffb347, #ffcc33);
-    }
+  .status-header {
+    padding: 48rpx 32rpx 80rpx;
+    color: #fff;
+    border-radius: 0 0 32rpx 32rpx;
+  }
+  
+  /* 0：待支付（红橙） */
+  .status-0 {
+    background: linear-gradient(135deg, #ff7a7a, #ff4949);
+  }
+  
+  /* 1：待发货（蓝色） */
+  .status-1 {
+    background: linear-gradient(135deg, #4facfe, #00c3ff);
+  }
+  
+  /* 2：配送中（橙黄） */
+  .status-2 {
+    background: linear-gradient(135deg, #4facfe, #00c3ff);
+  }
+  
+  /* 3：已完成（绿色） */
+  .status-3 {
+    background: linear-gradient(135deg, #90ceaa, #1abc9c);
+  }
+  
+  /* 4：已取消（灰色） */
+  .status-4 {
+    background: linear-gradient(135deg, #cfd9df, #e2ebf0);
+  }
+  
+  /* 5：售后相关（橙黄） */
+  .status-5 {
+    background: linear-gradient(135deg, #ffb347, #ffcc33);
+  }
+  
+  /* 👇 新增：6：已评价（绿色） */
+  .status-6 {
+    background: linear-gradient(135deg, #90ceaa, #1abc9c);
+  }
+  
   .status-content {
     display: flex;
     align-items: center;
@@ -450,4 +455,3 @@
   .confirm-pay-btn:active {
     background: #05944f;
   }
-  

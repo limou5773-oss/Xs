@@ -1,7 +1,5 @@
-<!-- pages/order-info/order-info.wxml -->
 <view class="order-info-page">
 
-<!-- 顶部订单状态 -->
 <view class="status-header status-{{order.status}}">
   <view class="status-content">
     <view class="status-icon">
@@ -10,16 +8,15 @@
       <text wx:elif="{{order.status == 2}}">🚚</text>
       <text wx:elif="{{order.status == 3}}">✅</text>
       <text wx:elif="{{order.status == 5}}">🛠</text>
+      <text wx:elif="{{order.status == 6}}">🌟</text>
       <text wx:else>🚫</text>
     </view>
 
     <view class="status-text-box">
-      <!-- 标题：优先用 headerStatusText（带售后结果），否则用原来的 statusText -->
       <text class="status-title">
         {{ headerStatusText || statusText[order.status] }}
       </text>
 
-      <!-- 下面是不同状态的说明文案 -->
       <text wx:if="{{order.status == 0 && countdownStr}}" class="status-desc">
         请在 {{countdownStr}} 内完成支付
       </text>
@@ -35,6 +32,9 @@
       <text wx:elif="{{order.status == 5}}" class="status-desc">
         售后处理中，请耐心等待
       </text>
+      <text wx:elif="{{order.status == 6}}" class="status-desc">
+        感谢您的评价，期待再次光临
+      </text>
       <text wx:else class="status-desc">
         订单已取消
       </text>
@@ -42,7 +42,6 @@
   </view>
 </view>
 
-<!-- 地址卡片 -->
 <view class="card address-card-float">
   <view class="addr-group">
     <view class="addr-icon">📍</view>
@@ -56,7 +55,6 @@
   </view>
 </view>
 
-<!-- 商品列表 -->
 <view class="card">
   <view class="card-header-row">
     <text class="card-title">商品清单</text>
@@ -75,12 +73,10 @@
   </block>
 </view>
 
-<!-- 售后信息（只有订单在售后，并且有售后记录时显示） -->
 <view class="card refund-card" wx:if="{{order.status == 5 && afterSale}}">
   <view class="refund-header">
     <text class="card-title">售后信息</text>
 
-    <!-- 右上角小徽标：根据售后状态显示不同文字 / 颜色 -->
     <view wx:if="{{afterSale.status == 0}}" class="refund-badge badge-pending">
       处理中
     </view>
@@ -95,7 +91,6 @@
     </view>
   </view>
 
-  <!-- 退款相关 -->
   <view class="row-small">
     <text class="label">退款金额</text>
     <text class="val price-red">
@@ -131,7 +126,6 @@
 
   <view class="divider"></view>
 
-  <!-- 订单信息（和你截图一致，放在售后信息下面） -->
   <view class="row-small">
     <text class="label">订单编号</text>
     <text class="val">{{order.orderNo}}</text>
@@ -154,7 +148,6 @@
   </view>
 </view>
 
-<!-- 如果不是售后订单，单独显示订单信息卡片 -->
 <view class="card info-card" wx:if="{{!(order.status == 5 && afterSale)}}">
   <view class="row-small">
     <text class="label">订单编号</text>
@@ -179,31 +172,26 @@
   </view>
 </view>
 
-<!-- 底部按钮区域 -->
 <view class="footer-btn-area">
 
-  <!-- 待支付 -->
   <button wx:if="{{order.status == 0}}"
           class="main-btn pay-btn"
           bindtap="onPay">
     去支付
   </button>
 
-  <!-- 已完成：可以申请售后 -->
-  <button wx:elif="{{order.status == 3}}"
+  <button wx:elif="{{order.status == 3 || order.status == 6}}"
           class="main-btn refund-btn"
           bindtap="applyRefund">
     申请售后
   </button>
 
-  <!-- 售后中 & 待处理：显示取消申请 -->
   <button wx:elif="{{order.status == 5 && afterSale && afterSale.status == 0}}"
           class="main-btn cancel-btn"
           bindtap="cancelAfterSale">
     取消申请
   </button>
 
-  <!-- 其它情况：再来一单 -->
   <button wx:else
           class="main-btn again-btn"
           bindtap="buyAgain">
@@ -212,7 +200,6 @@
 
 </view>
 
-<!-- 支付弹窗 -->
 <view class="pay-mask {{showPayPopup ? 'show' : ''}}" bindtap="closePayPopup">
   <view class="pay-panel" catchtap="true">
     <view class="panel-header">

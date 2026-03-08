@@ -20,6 +20,7 @@
   <view class="info-card">
     <view class="title-row">
       <text class="product-title">{{product.name}}</text>
+  
       <button class="share-btn" open-type="share">
         <image src="/images/share.png" class="share-icon" wx:if="{{false}}"></image> <text>🔗 分享</text>
       </button>
@@ -46,6 +47,29 @@
     </view>
     <view class="content-box">
       <text>{{product.description || '暂无详情描述，但在新鲜度和品质上，我们从不打折！'}}</text>
+    </view>
+  </view>
+
+  <view class="review-section" wx:if="{{reviews.length > 0}}">
+    <view class="review-header">
+      <text class="review-title">商品评价 ({{reviews.length}})</text>
+    </view>
+    
+    <view class="review-list">
+      <block wx:for="{{reviews}}" wx:key="id">
+        <view class="review-item">
+          <view class="user-info">
+            <image class="avatar" src="{{item.avatar || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+            <text class="nickname">{{item.nickname || '微信用户'}}</text>
+            <view class="star-badge">
+               <text class="star-num">{{item.rating}}</text>
+               <text class="star-icon">★</text>
+            </view>
+          </view>
+          <view class="review-content">{{item.content}}</view>
+          <view class="review-time">{{item.createTime}}</view>
+        </view>
+      </block>
     </view>
   </view>
 

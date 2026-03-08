@@ -46,6 +46,7 @@
             <el-option label="已完成" :value="3" />
             <el-option label="已取消" :value="4" />
             <el-option label="已退款" :value="5" />
+            <el-option label="已评价" :value="6" />
           </el-select>
 
           <div class="date-group">
@@ -147,7 +148,6 @@
           </template>
         </el-table-column>
 
-
         <el-table-column label="操作" width="120" align="center" fixed="right">
           <template #default="{ row }">
             <el-button 
@@ -237,18 +237,16 @@ const stat = computed(() => ({
   finished: orders.value.filter(o => o.status === 3).length
 }));
 
-/* 状态映射 */
-// 状态：0=待支付, 1=已支付, 2=配送中, 3=已完成, 4=已取消, 5=已退款
-const statusText = s => ['待支付','已支付','配送中','已完成','已取消','已退款'][s];
-// 状态颜色：info, warning, primary, success, danger, danger
-const statusColor = s => ['info','warning','primary','success','danger','danger'][s];
-// 配送进度按钮类型：info, warning, primary, success, info, danger
-const progressBtnType = s => ['info','warning','primary','success','info','danger'][s];
+/* 👇 状态映射 (完美修复空白：在这里加上了对状态6的映射) */
+// 状态：0=待支付, 1=已支付, 2=配送中, 3=已完成, 4=已取消, 5=已退款, 6=已评价
+const statusText = s => ['待支付','已支付','配送中','已完成','已取消','已退款','已评价'][s];
+// 状态颜色：info, warning, primary, success, danger, danger, success
+const statusColor = s => ['info','warning','primary','success','danger','danger','success'][s];
+// 配送进度按钮类型：info, warning, primary, success, info, danger, success
+const progressBtnType = s => ['info','warning','primary','success','info','danger','success'][s];
 
 /* 数据加载 */
 const loadOrders = async () => {
-  // 注意：在实际应用中，这里需要处理查询参数的空值问题
-  // 仅发送非空参数，以保证 API 请求的干净
   const params = Object.fromEntries(
     Object.entries(query.value).filter(([_, v]) => v !== null && v !== '')
   );
@@ -353,17 +351,6 @@ onMounted(loadOrders);
 </script>
 
 <style scoped>
-/*
- * 样式指南：遵循分类页面 (Category) 的设计规范，确保颜色、阴影、圆角、字号等元素一致。
- * 1. 页面及卡片基础
- * 2. 统计卡片 (Stat Cards)
- * 3. 筛选栏 (Filter Bar)
- * 4. 表格主体 (Table)
- * 5. 表格内复杂字段 (地址/时间/备注)
- * 6. 分页 (Pager)
- * 7. 对话框 (Dialog/Timeline)
-*/
-
 /* ================================ 1. 页面及卡片基础 ================================ */
 .order-page {
   padding: 16px 18px;

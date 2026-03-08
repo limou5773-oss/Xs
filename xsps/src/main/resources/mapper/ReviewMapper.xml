@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sxps.xsps.mapper.ReviewMapper">
+
+    <insert id="insert">
+        INSERT INTO review (order_id, user_id, rating, content, create_time)
+        VALUES (#{orderId}, #{userId}, #{rating}, #{content}, now())
+    </insert>
+
+    <select id="selectByOrderId" resultType="com.sxps.xsps.pojo.Review">
+        SELECT * FROM review WHERE order_id = #{orderId}
+    </select>
+
+    <select id="selectAll" resultType="com.sxps.xsps.pojo.Review">
+        SELECT
+            r.*,
+            o.order_no as orderNo
+        FROM review r
+                 LEFT JOIN orders o ON r.order_id = o.id
+        ORDER BY r.create_time DESC
+    </select>
+
+    <select id="selectByProductId" resultType="com.sxps.xsps.pojo.Review">
+        SELECT
+            r.*,
+            u.nickname AS nickname,
+            u.avatar AS avatar
+        FROM review r
+                 JOIN order_item oi ON r.order_id = oi.order_id
+                 LEFT JOIN user u ON r.user_id = u.id
+        WHERE oi.product_id = #{productId}
+        ORDER BY r.create_time DESC
+    </select>
+
+</mapper>

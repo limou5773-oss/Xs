@@ -9,9 +9,9 @@ Page({
     address: {},
     items: [],
 
-    // 0:待支付 1:待发货 2:配送中 3:已完成 4:已取消 5:售后中（包括处理中/成功/拒绝/取消）
-    statusText: ['待支付', '待发货', '配送中', '已完成', '已取消', '售后中'],
-    statusColor: ['#fa5151', '#409eff', '#fa9d3b', '#07c160', '#999', '#fa5151'],
+    // 👇 在这里加上了第7项：'已评价' 及其对应的绿色
+    statusText: ['待支付', '待发货', '配送中', '已完成', '已取消', '售后中', '已评价'],
+    statusColor: ['#fa5151', '#409eff', '#fa9d3b', '#07c160', '#999', '#fa5151', '#07c160'],
 
     countdownStr: '',
     showPayPopup: false,
@@ -96,21 +96,20 @@ Page({
         let headerStatusDesc = '';
 
         if (afterSale) {
-          // 根据售后状态，给顶部卡片设置不同文案
           switch (afterSale.status) {
-            case 0: // 待处理
+            case 0: 
               headerStatusText = '售后中';
               headerStatusDesc = '售后处理中，请耐心等待';
               break;
-            case 1: // 已同意 / 已退款
+            case 1: 
               headerStatusText = '售后成功';
               headerStatusDesc = '退款已原路退回，请注意查收';
               break;
-            case 2: // 已拒绝
+            case 2: 
               headerStatusText = '售后已拒绝';
               headerStatusDesc = '商家已拒绝本次售后申请';
               break;
-            case 3: // 用户取消
+            case 3: 
               headerStatusText = '售后已取消';
               headerStatusDesc = '本次售后申请已取消';
               break;

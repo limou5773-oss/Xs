@@ -22,9 +22,12 @@ import CategoryList from '@/views/category/CategoryList.vue'
 
 // 消息中心
 import MessageCenter from '@/views/message/MessageCenter.vue'
-//公告管理
+// 公告管理
 import NoticeList from "@/views/notice/NoticeList.vue";
 import NoticeEdit from "@/views/notice/NoticeEdit.vue";
+
+// 👇 新增：评价管理页面导入
+import ReviewList from "@/views/review/ReviewList.vue";
 
 const routes = [
   {
@@ -49,7 +52,10 @@ const routes = [
 
       { path: 'categories', name: 'CategoryList', component: CategoryList },
 
-      //新增：消息中心
+      // 👇 新增：评价管理路由
+      { path: 'reviews', name: 'ReviewList', component: ReviewList },
+
+      // 新增：消息中心
       { path: 'messages', name: 'MessageCenter', component: MessageCenter },
       // 公告管理
       { path: "notice", component: NoticeList },

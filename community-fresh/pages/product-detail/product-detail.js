@@ -7,29 +7,29 @@ Page({
     id: null,
     product: null,
     cartCount: 0,
-    loading: true
+    loading: true,
+    reviews: [] // 新增：存放当前商品的评价列表
   },
 
   onLoad(options) {
     if (options.id) {
       this.setData({ id: options.id });
       this.loadProductDetail(options.id);
+      this.fetchReviews(options.id); // 拉取评价
     }
     this.updateCartCount();
   },
 
-  // 核心：每次显示都刷新库存
   onShow() {
     if (this.data.id) {
       this.loadProductDetail(this.data.id);
+      this.fetchReviews(this.data.id); // 刷新时也更新评价
       this.updateCartCount();
     }
   },
 
   async loadProductDetail(id) {
-
     try {
-      // 加时间戳防止缓存
       const t = Date.now();
       const res = await API.product.detail(id + `?t=${t}`); 
       
@@ -45,6 +45,18 @@ Page({
       console.error(err);
     } finally {
       this.setData({ loading: false });
+    }
+  },
+
+  // 新增：获取商品评价的函数
+  async fetchReviews(productId) {
+    try {
+      const res = await API.review.listByProduct(productId);
+      // 适配你的 Result 格式，提取数组
+      const list = Array.isArray(res) ? res : (res.data || []);
+      this.setData({ reviews: list });
+    } catch(err) {
+      console.error('加载评价失败', err);
     }
   },
 
@@ -84,12 +96,12 @@ Page({
     }
   },
 
-// 3. 跳转购物车
-goCart() {
+  goCart() {
     wx.navigateTo({
       url: '/pages/cart/cart'
     });
   },
+
   async updateCartCount() {
     const user = wx.getStorageSync('user');
     if (!user) return;

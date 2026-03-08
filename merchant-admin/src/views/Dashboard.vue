@@ -98,10 +98,7 @@ const initChart = () => {
 // 加载仪表盘数据
 const load = async () => {
   try {
-    // merchantId 先写死 1
     const res = await getDashboardSummary(1)
-
-    // 兼容 request 直接返回 Result 或 axios 原始 response
     const body = res && res.code !== undefined ? res : res.data
     const d = body && body.data ? body.data : body || {}
 

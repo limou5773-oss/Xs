@@ -2,7 +2,7 @@
 const API = require('../../utils/api');
 const BASE_URL = "http://localhost:8080";
 
-// ⭐ 新增：售后状态文案映射
+// ⭐ 售后状态文案映射
 // 0待处理 1退款成功 2拒绝 3用户取消
 const AFTER_SALE_TEXT = {
   0: '售后处理中',
@@ -25,9 +25,11 @@ Page({
     orders: [],
     filtered: [],
     userId: null,
-    statusText: ['待支付', '待发货', '配送中', '已完成', '已取消', '售后中'],
-    statusColor: ['#fa5151', '#07c160', '#fa9d3b', '#07c160', '#999', '#fa5151'],
-    statusBg: ['#fee2e2', '#e1f3d8', '#fdf6ec', '#e1f3d8', '#f4f4f5', '#ffe5e5'],
+    
+    // 👇 新增了状态 6：已评价
+    statusText: ['待支付', '待发货', '配送中', '已完成', '已取消', '售后中', '已评价'],
+    statusColor: ['#fa5151', '#07c160', '#fa9d3b', '#07c160', '#999', '#fa5151', '#fa9d3b'],
+    statusBg: ['#fee2e2', '#e1f3d8', '#fdf6ec', '#e1f3d8', '#f4f4f5', '#ffe5e5', '#fdf6ec'],
 
     // 支付弹窗控制
     showPayPopup: false,
@@ -98,7 +100,7 @@ Page({
         }
       });
 
-      // 新增：给 status=5 的订单补充售后状态文案
+      // 给 status=5 的订单补充售后状态文案
       await Promise.all(
         list.map(async (o) => {
           if (Number(o.status) === 5) {
@@ -126,14 +128,20 @@ Page({
     }
   },
 
-  // 按状态过滤订单（全部 / 各个状态）
+  // 👇 按状态过滤订单（全部 / 各个状态）
   applyFilter() {
     const { orders } = this.data;
     const activeStatus = Number(this.data.activeStatus); // 统一转成数字
 
     const filtered = activeStatus === -1
       ? orders
-      : orders.filter(o => Number(o.status) === activeStatus);
+      : orders.filter(o => {
+          // ⭐ 核心修改：如果当前选中了"已完成"(3)的Tab，那么"已评价"(6)的订单也显示出来
+          if (activeStatus === 3) {
+            return Number(o.status) === 3 || Number(o.status) === 6;
+          }
+          return Number(o.status) === activeStatus;
+        });
 
     this.setData({ filtered });
     this.updateCountdown();
@@ -225,6 +233,15 @@ Page({
   goDetail(e) {
     wx.navigateTo({
       url: `/pages/order-info/order-info?id=${e.currentTarget.dataset.id}`
+    });
+  },
+
+  // 跳转去评价页面
+  goReview(e) {
+    const item = e.currentTarget.dataset.item;
+    wx.navigateTo({
+      // 携带 orderId 和 merchantId 跳转
+      url: `/pages/review/review?orderId=${item.id}&merchantId=${item.merchantId}`
     });
   }
 });

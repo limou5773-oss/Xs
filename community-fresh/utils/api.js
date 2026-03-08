@@ -65,19 +65,21 @@ const API = {
 
   // 9. 售后
   afterSale: {
-    // 申请售后：data = { orderId, userId, type, reason, refundPrice ... }
     apply: (data) => request.post('/api/afterSale/apply', data),
-
-    // 取消售后：data = { orderId, userId }
     cancel: (data) => request.post('/api/afterSale/cancel', data),
-
-    // 根据订单 ID 查询最新一条售后记录
     detail: (orderId) => request.get(`/api/afterSale/detail/${orderId}`)
   },
 
   // 10. 消息
   message: {
     list: (userId) => request.get(`/api/message/list/${userId}`)
+  },
+
+  // 11. 评价 (新增)
+  review: {
+    add: (data) => request.post('/api/review/add', data),
+    list: () => request.get('/api/review/list'),
+    listByProduct: (productId) => request.get(`/api/review/product/${productId}`)
   }
 };
 

@@ -1,49 +1,95 @@
+/* 全局背景 */
 .review-container {
     padding: 30rpx;
-    background-color: #f7f7f7;
+    background-color: #F5F7FA;
     min-height: 100vh;
-  }
-  
-  .section {
-    background-color: #fff;
-    border-radius: 12rpx;
-    padding: 20rpx;
-    margin-bottom: 30rpx;
-  }
-  
-  .label {
-    font-size: 28rpx;
-    color: #333;
-    display: block;
-    margin-bottom: 10rpx;
-  }
-  
-  .stars {
-    display: flex;
-    align-items: center;
-  }
-  
-  .star {
-    width: 60rpx;
-    height: 60rpx;
-    margin-right: 10rpx;
-  }
-  
-  textarea {
-    width: 100%;
-    min-height: 200rpx;
-    border: 1rpx solid #ddd;
-    border-radius: 8rpx;
-    padding: 20rpx;
-    font-size: 28rpx;
     box-sizing: border-box;
   }
   
-  .submit-btn {
-    background-color: #07c160;
-    color: #fff;
-    font-size: 30rpx;
-    padding: 20rpx 0;
-    border-radius: 8rpx;
+  /* 悬浮卡片式容器 */
+  .section {
+    background-color: #ffffff;
+    padding: 40rpx;
+    border-radius: 24rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.03);
   }
   
+  /* 标题标签 */
+  .label {
+    font-size: 32rpx;
+    color: #1e293b;
+    margin-bottom: 24rpx;
+    display: block;
+    font-weight: 600;
+  }
+  
+  /* =================================
+     星星评分区
+     ================================= */
+  .stars {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 居中排版显得更聚焦 */
+    padding: 20rpx 0 10rpx;
+  }
+  
+  .star {
+    font-size: 72rpx; /* 字体调大，方便手指点击 */
+    color: #E2E8F0;   /* 未选中的高级灰 */
+    margin: 0 16rpx;
+    line-height: 1;
+    /* 增加更平滑的 Q 弹动画过渡 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+  }
+  
+  /* 选中的实心星星样式 */
+  .star.active {
+    color: #FFB020;   /* 更有质感的暖亮橙色 */
+    transform: scale(1.15); /* 点击放大效果更明显 */
+    text-shadow: 0 6rpx 16rpx rgba(255, 176, 32, 0.4); /* 增加梦幻发光效果 */
+  }
+  
+  /* =================================
+     评价内容输入区
+     ================================= */
+  textarea {
+    width: 100%;
+    height: 240rpx;
+    background-color: #F8FAFC;
+    padding: 24rpx;
+    box-sizing: border-box;
+    border-radius: 16rpx;
+    font-size: 28rpx;
+    color: #334155;
+    border: 1rpx solid #E2E8F0;
+    line-height: 1.6;
+  }
+  
+  /* 占位符颜色调整（小程序支持这个特性） */
+  textarea-placeholder {
+    color: #94A3B8;
+  }
+  
+  /* =================================
+     底部提交按钮
+     ================================= */
+  .submit-btn {
+    background: linear-gradient(135deg, #07c160, #05a955); /* 微信绿渐变 */
+    color: #ffffff;
+    border-radius: 48rpx;
+    font-size: 32rpx;
+    font-weight: bold;
+    margin-top: 80rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    border: none;
+    box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.25); /* 按钮彩色阴影 */
+    transition: all 0.2s;
+  }
+  
+  /* 按钮点击按压反馈 */
+  .submit-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 4rpx 12rpx rgba(7, 193, 96, 0.15);
+  }

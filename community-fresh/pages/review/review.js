@@ -1,4 +1,5 @@
-const request = require('../../utils/request.js')
+// 引入写好的接口统一管理文件
+const API = require('../../utils/api.js')
 
 Page({
   data: {
@@ -24,7 +25,7 @@ Page({
     this.setData({ content: e.detail.value })
   },
 
-  onSubmit() {
+  async onSubmit() {
     const user = wx.getStorageSync('user')
     const { rating, content, orderId, merchantId } = this.data
 
@@ -33,19 +34,30 @@ Page({
       return
     }
 
-    request.post('/review/add', {
-      userId: user.id,
-      merchantId,
-      orderId,
-      rating,
-      content
-    }).then(res => {
-      if (res.code === 200) {
-        wx.showToast({ title: '评价成功' })
+    wx.showLoading({ title: '提交中...' })
+
+    try {
+      // 👉 这里改成了调用 API.review.add，它会自动请求 /api/review/add
+      const res = await API.review.add({
+        userId: user.id,
+        merchantId: merchantId,
+        orderId: orderId,
+        rating: rating,
+        content: content
+      })
+
+      wx.hideLoading()
+      
+      // 适配你的 Result 格式
+      wx.showToast({ title: '评价成功', icon: 'success' })
+      setTimeout(() => {
         wx.navigateBack()
-      } else {
-        wx.showToast({ title: res.msg, icon: 'error' })
-      }
-    })
+      }, 1500)
+
+    } catch (err) {
+      wx.hideLoading()
+      console.error(err)
+      wx.showToast({ title: '提交失败，请重试', icon: 'none' })
+    }
   }
 })

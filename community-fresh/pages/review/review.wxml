@@ -2,13 +2,13 @@
   <view class="section">
     <text class="label">评分：</text>
     <view class="stars">
-      <block wx:for="{{5}}" wx:key="index">
-        <image
-          class="star"
-          src="{{index < rating ? '/assets/star-on.png' : '/assets/star-off.png'}}"
-          bindtap="setRating"
-          data-index="{{index}}"
-        ></image>
+      <block wx:for="{{[0, 1, 2, 3, 4]}}" wx:key="*this">
+        <view 
+          class="star {{index < rating ? 'active' : ''}}" 
+          bindtap="setRating" 
+          data-index="{{index}}">
+          {{index < rating ? '★' : '☆'}}
+        </view>
       </block>
     </view>
   </view>

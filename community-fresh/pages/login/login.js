@@ -30,7 +30,7 @@ Page({
       if (!token) throw new Error('未获取到Token');
 
       wx.setStorageSync('token', token);
-      
+
       // 如果后端返回的用户信息里没有头像(是新用户)，给个默认的
       if (!user.avatar) {
         user.avatar = '/assets/default-avatar.png'; // 你的本地默认头像

@@ -70,8 +70,10 @@
   }
   
   @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30rpx); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0;
+    transform: translateY(30rpx); }
+    to { opacity: 1; transform: translateY(0);
+    }
   }
   
   /* --- 卡片头部 --- */
@@ -198,7 +200,7 @@
     align-items: center;
     margin-top: 28rpx;
     padding-top: 28rpx;
-    border-top: 1rpx solid #F8FAFC; 
+    border-top: 1rpx solid #F8FAFC;
   }
   
   .price-row {
@@ -236,6 +238,8 @@
   /* 按钮组 */
   .btn-row {
     display: flex;
+    justify-content: flex-end; /* 靠右对齐 */
+    gap: 20rpx; /* 增加按钮间距 */
   }
   
   .btn-action {
@@ -262,6 +266,13 @@
     border: none;
     color: #fff;
     box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.25);
+  }
+  
+  /* 专属的去评价按钮样式 */
+  .btn-action.review-btn {
+    background: #fff;
+    border: 1rpx solid #fa9d3b;
+    color: #fa9d3b;
   }
   
   .btn-action:active {

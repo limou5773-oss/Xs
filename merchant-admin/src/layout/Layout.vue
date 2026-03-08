@@ -1,6 +1,5 @@
 <template>
   <div class="layout">
-    <!-- 左侧导航 -->
     <aside class="sidebar">
       <div class="logo">商家后台</div>
 
@@ -32,6 +31,11 @@
           <span>订单管理</span>
         </el-menu-item>
 
+        <el-menu-item index="/reviews">
+          <el-icon><Star /></el-icon>
+          <span>评价管理</span>
+        </el-menu-item>
+
         <el-menu-item index="/after-sale">
           <el-icon><ChatSquare /></el-icon>
           <span>售后管理</span>
@@ -42,7 +46,6 @@
           <span>消息中心</span>
         </el-menu-item>
 
-        <!-- ⭐ 公告管理必须放在 el-menu 内！ -->
         <el-menu-item index="/notice">
           <el-icon><BellFilled /></el-icon>
           <span>公告管理</span>
@@ -52,13 +55,11 @@
     </aside>
 
 
-    <!-- 右侧主内容 -->
     <div class="main">
       <header class="header">
         <div class="title">商家后台管理系统</div>
 
         <div class="user">
-          <!-- 顶部右侧未读消息小红点 -->
           <el-badge
             :value="unreadCount"
             type="danger"
@@ -84,6 +85,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
+// 👇 注意这里引入了 Star 图标
 import {
   Monitor,
   ShoppingCart,
@@ -91,13 +93,15 @@ import {
   ChatSquare,
   Collection,
   Bell,
-  BellFilled
+  BellFilled,
+  Star 
 } from '@element-plus/icons-vue'
 import { getUnreadCount } from '@/api/message'
 
 const route = useRoute()
 const router = useRouter()
-const activeMenu = route.path
+// 修复 activeMenu 的响应式问题，刷新页面或跳转后菜单高亮才能正确
+const activeMenu = ref(route.path)
 
 const unreadCount = ref(0)
 
@@ -121,7 +125,6 @@ const loadUnread = async () => {
 
 onMounted(() => {
   loadUnread()
-  // 每 30s 刷新一次未读数（可按需调整）
   setInterval(loadUnread, 30000)
 })
 </script>
