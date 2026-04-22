@@ -142,7 +142,7 @@ const query = ref({
   rating: null
 })
 
-// 👇 新增：自动计算统计卡片的数据
+//  新增：自动计算统计卡片的数据
 const stat = computed(() => ({
   total: reviewList.value.length,
   fiveStar: reviewList.value.filter(item => item.rating === 5).length,

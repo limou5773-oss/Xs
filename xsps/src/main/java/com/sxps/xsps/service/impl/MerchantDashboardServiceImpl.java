@@ -39,9 +39,6 @@ public class MerchantDashboardServiceImpl implements MerchantDashboardService {
         Integer onSaleProduct = dashboardMapper.countOnShelfProducts(merchantId);
         map.put("onSaleProduct", onSaleProduct == null ? 0 : onSaleProduct);
 
-        // ========================
-        // 最近 7 天订单趋势（关键部分）
-        // ========================
 
         // 1. 先查出数据库里“有订单的那些天”
         List<Map<String, Object>> dbList =

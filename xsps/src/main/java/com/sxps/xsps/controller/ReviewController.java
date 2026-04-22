@@ -18,16 +18,16 @@ public class ReviewController {
     public Result<?> add(@RequestBody Review review) {
         try {
             reviewService.addReview(review);
-            return Result.ok(); // 修改为你的 ok() 方法
+            return Result.ok();
         } catch (Exception e) {
-            return Result.fail(e.getMessage()); // 修改为你的 fail() 方法
+            return Result.fail(e.getMessage());
         }
     }
 
     // 商家查看评价列表
     @GetMapping("/list")
     public Result<?> list() {
-        return Result.ok(reviewService.getAllReviews()); // 修改为你的 ok(data) 方法
+        return Result.ok(reviewService.getAllReviews());
     }
 
     // 获取某个商品的评价

@@ -37,7 +37,6 @@ Page({
     wx.showLoading({ title: '提交中...' })
 
     try {
-      // 👉 这里改成了调用 API.review.add，它会自动请求 /api/review/add
       const res = await API.review.add({
         userId: user.id,
         merchantId: merchantId,
