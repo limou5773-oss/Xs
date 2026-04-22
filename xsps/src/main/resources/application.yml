@@ -22,8 +22,9 @@ mybatis-plus:
 
 #微信id
 wx:
-  appid: wx3c5766896799153a
-  secret: 602a3e6d3881411b2c8ade905a79ae0f
+#  appid和secret输出你的微信小程序的
+  appid:
+  secret:
 
 #分页插件
 pagehelper:
